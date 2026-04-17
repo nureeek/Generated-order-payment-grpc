@@ -85,8 +85,9 @@ func (x *PaymentRequest) GetCurrency() string {
 type PaymentResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PaymentId     string                 `protobuf:"bytes,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id,omitempty"`
-	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Amount        string                 `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -128,6 +129,13 @@ func (x *PaymentResponse) GetPaymentId() string {
 	return ""
 }
 
+func (x *PaymentResponse) GetAmount() string {
+	if x != nil {
+		return x.Amount
+	}
+	return ""
+}
+
 func (x *PaymentResponse) GetStatus() string {
 	if x != nil {
 		return x.Status
@@ -142,102 +150,6 @@ func (x *PaymentResponse) GetCreatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-type ListPaymentsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	MinAmount     int64                  `protobuf:"varint,1,opt,name=min_amount,json=minAmount,proto3" json:"min_amount,omitempty"`
-	MaxAmount     int64                  `protobuf:"varint,2,opt,name=max_amount,json=maxAmount,proto3" json:"max_amount,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListPaymentsRequest) Reset() {
-	*x = ListPaymentsRequest{}
-	mi := &file_payment_payment_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListPaymentsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListPaymentsRequest) ProtoMessage() {}
-
-func (x *ListPaymentsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_payment_payment_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListPaymentsRequest.ProtoReflect.Descriptor instead.
-func (*ListPaymentsRequest) Descriptor() ([]byte, []int) {
-	return file_payment_payment_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *ListPaymentsRequest) GetMinAmount() int64 {
-	if x != nil {
-		return x.MinAmount
-	}
-	return 0
-}
-
-func (x *ListPaymentsRequest) GetMaxAmount() int64 {
-	if x != nil {
-		return x.MaxAmount
-	}
-	return 0
-}
-
-type ListPaymentsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Payments      []*PaymentResponse     `protobuf:"bytes,1,rep,name=payments,proto3" json:"payments,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListPaymentsResponse) Reset() {
-	*x = ListPaymentsResponse{}
-	mi := &file_payment_payment_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListPaymentsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListPaymentsResponse) ProtoMessage() {}
-
-func (x *ListPaymentsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_payment_payment_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListPaymentsResponse.ProtoReflect.Descriptor instead.
-func (*ListPaymentsResponse) Descriptor() ([]byte, []int) {
-	return file_payment_payment_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *ListPaymentsResponse) GetPayments() []*PaymentResponse {
-	if x != nil {
-		return x.Payments
-	}
-	return nil
-}
-
 var File_payment_payment_proto protoreflect.FileDescriptor
 
 const file_payment_payment_proto_rawDesc = "" +
@@ -246,23 +158,16 @@ const file_payment_payment_proto_rawDesc = "" +
 	"\x0ePaymentRequest\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x16\n" +
 	"\x06amount\x18\x02 \x01(\x01R\x06amount\x12\x1a\n" +
-	"\bcurrency\x18\x03 \x01(\tR\bcurrency\"\x83\x01\n" +
+	"\bcurrency\x18\x03 \x01(\tR\bcurrency\"\x9b\x01\n" +
 	"\x0fPaymentResponse\x12\x1d\n" +
 	"\n" +
 	"payment_id\x18\x01 \x01(\tR\tpaymentId\x12\x16\n" +
-	"\x06status\x18\x02 \x01(\tR\x06status\x129\n" +
+	"\x06amount\x18\x02 \x01(\tR\x06amount\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\x129\n" +
 	"\n" +
-	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"S\n" +
-	"\x13ListPaymentsRequest\x12\x1d\n" +
-	"\n" +
-	"min_amount\x18\x01 \x01(\x03R\tminAmount\x12\x1d\n" +
-	"\n" +
-	"max_amount\x18\x02 \x01(\x03R\tmaxAmount\"L\n" +
-	"\x14ListPaymentsResponse\x124\n" +
-	"\bpayments\x18\x01 \x03(\v2\x18.payment.PaymentResponseR\bpayments2\xa2\x01\n" +
+	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt2U\n" +
 	"\x0ePaymentService\x12C\n" +
-	"\x0eProcessPayment\x12\x17.payment.PaymentRequest\x1a\x18.payment.PaymentResponse\x12K\n" +
-	"\fListPayments\x12\x1c.payment.ListPaymentsRequest\x1a\x1d.payment.ListPaymentsResponseB9Z7github.com/nureeek/Generated-order-payment-grpc/paymentb\x06proto3"
+	"\x0eProcessPayment\x12\x17.payment.PaymentRequest\x1a\x18.payment.PaymentResponseB9Z7github.com/nureeek/Generated-order-payment-grpc/paymentb\x06proto3"
 
 var (
 	file_payment_payment_proto_rawDescOnce sync.Once
@@ -276,26 +181,21 @@ func file_payment_payment_proto_rawDescGZIP() []byte {
 	return file_payment_payment_proto_rawDescData
 }
 
-var file_payment_payment_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_payment_payment_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_payment_payment_proto_goTypes = []any{
 	(*PaymentRequest)(nil),        // 0: payment.PaymentRequest
 	(*PaymentResponse)(nil),       // 1: payment.PaymentResponse
-	(*ListPaymentsRequest)(nil),   // 2: payment.ListPaymentsRequest
-	(*ListPaymentsResponse)(nil),  // 3: payment.ListPaymentsResponse
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
 }
 var file_payment_payment_proto_depIdxs = []int32{
-	4, // 0: payment.PaymentResponse.created_at:type_name -> google.protobuf.Timestamp
-	1, // 1: payment.ListPaymentsResponse.payments:type_name -> payment.PaymentResponse
-	0, // 2: payment.PaymentService.ProcessPayment:input_type -> payment.PaymentRequest
-	2, // 3: payment.PaymentService.ListPayments:input_type -> payment.ListPaymentsRequest
-	1, // 4: payment.PaymentService.ProcessPayment:output_type -> payment.PaymentResponse
-	3, // 5: payment.PaymentService.ListPayments:output_type -> payment.ListPaymentsResponse
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	2, // 0: payment.PaymentResponse.created_at:type_name -> google.protobuf.Timestamp
+	0, // 1: payment.PaymentService.ProcessPayment:input_type -> payment.PaymentRequest
+	1, // 2: payment.PaymentService.ProcessPayment:output_type -> payment.PaymentResponse
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_payment_payment_proto_init() }
@@ -309,7 +209,7 @@ func file_payment_payment_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_payment_payment_proto_rawDesc), len(file_payment_payment_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
